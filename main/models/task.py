@@ -14,14 +14,14 @@ class Task(models.Model):
         ARCHIVED = "archived"
 
     title = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     date_created = models.DateField(auto_now_add=True)
     date_updated = models.DateField(auto_now=True)
-    date_to_finish = models.DateField()
+    date_to_finish = models.DateField(blank=True, null=True)
     condition = models.CharField(
         max_length=50, default=Conditions.NEW_TASK, choices=Conditions.choices
     )
-    priority = models.PositiveSmallIntegerField()
+    priority = models.PositiveSmallIntegerField(blank=True, null=True)
     author = models.ForeignKey(
         User, on_delete=models.SET_NULL, related_name="tasks_author", null=True
     )
