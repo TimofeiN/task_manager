@@ -9,24 +9,25 @@ class UserFilter(django_filters.FilterSet):
 
     class Meta:
         model = User
-        fields = ('name',)
+        fields = ("name",)
 
 
 class TaskFilter(django_filters.FilterSet):
-    condition = django_filters.ChoiceFilter(field_name="condition", choices=Task.Conditions.choices)
+    condition = django_filters.ChoiceFilter(
+        field_name="condition", choices=Task.Conditions.choices
+    )
     tag = django_filters.ModelMultipleChoiceFilter(
-        field_name="tag__title", 
-        to_field_name="title", 
+        field_name="tag__title",
+        to_field_name="title",
         conjoined=True,
-        queryset=Tag.objects.all())
+        queryset=Tag.objects.all(),
+    )
     executor = django_filters.ModelChoiceFilter(
-        field_name="executor",
-        queryset=User.objects.all()
-        )
+        field_name="executor", queryset=User.objects.all()
+    )
     author = django_filters.ModelChoiceFilter(
-        field_name="author", 
-        queryset=User.objects.all()
-        )
+        field_name="author", queryset=User.objects.all()
+    )
 
     class Meta:
         model = Task
@@ -42,7 +43,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.order_by("id")
     serializer_class = TagSerializer
-    
+
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = (
