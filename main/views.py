@@ -1,7 +1,16 @@
 import django_filters
 from rest_framework import viewsets
+from rest_framework.permissions import BasePermission, IsAdminUser, SAFE_METHODS
+from django.http import HttpRequest
+
+
 from .models import User, Task, Tag
 from .serializers import UserSerializer, TaskSerializer, TagSerializer
+
+
+class ReadOnly(BasePermission):
+    def has_permission(self, request: HttpRequest, view: viewsets.ModelViewSet) -> bool:
+        return request.method in SAFE_METHODS
 
 
 class UserFilter(django_filters.FilterSet):
@@ -38,11 +47,13 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.order_by("id")
     serializer_class = UserSerializer
     filterset_class = UserFilter
+    permission_classes = [IsAdminUser | ReadOnly]
 
 
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.order_by("id")
     serializer_class = TagSerializer
+    permission_classes = [IsAdminUser | ReadOnly]
 
 
 class TaskViewSet(viewsets.ModelViewSet):
@@ -54,3 +65,4 @@ class TaskViewSet(viewsets.ModelViewSet):
     )
     serializer_class = TaskSerializer
     filterset_class = TaskFilter
+    permission_classes = [IsAdminUser | ReadOnly]
