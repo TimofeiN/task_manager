@@ -37,7 +37,7 @@ class TestViewSetBase(APITestCase):
         assert response.status_code == HTTPStatus.CREATED
         return response.data
 
-    def retrive(self, args: List[Union[str, int]] = None) -> dict:
+    def retrieve(self, args: List[Union[str, int]] = None) -> dict:
         self.client.force_login(self.user)
         response = self.client.get(self.detail_url(args))
         assert response.status_code == HTTPStatus.OK
