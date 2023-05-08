@@ -1,3 +1,5 @@
+from rest_framework.utils.serializer_helpers import ReturnDict
+
 from base import TestViewSetBase
 
 
@@ -47,31 +49,35 @@ class TestTaskViewSet(TestViewSetBase):
         }
         return expected_dict
 
-    def test_create(self) -> dict:
+    def test_create(self) -> ReturnDict:
         task = self.create(data=self.task_data, format="json")
         expected_response = self.expected_details(task, self.task_data)
         assert task == expected_response
         return task
 
-    def test_retrive(self) -> None:
+    def test_retrieve(self) -> None:
         task = self.create(data=self.task_data, format="json")
         task_id = task["id"]
-        response = self.retrive(task_id)
+        response = self.retrieve(task_id)
         assert response == task
 
-    def test_delete(self) -> None:
-        task = self.test_create()
-        task_id = task["id"]
-        response = self.delete(task_id)
-        assert response.content == b""
-
     def test_list(self) -> None:
-        self.test_create()
+        new_task = self.test_create()
         response = self.list()
         assert len(response) == 1
+        assert new_task in response
 
     def test_update(self) -> None:
         task = self.test_create()
         new_title = "title updated"
         response = self.update({"title": new_title}, task["id"])
         assert response["title"] == new_title
+
+    def test_delete(self) -> None:
+        task = self.test_create()
+        task_id = task["id"]
+        assert task in self.list()
+
+        response = self.delete(task_id)
+        assert response.content == b""
+        assert task not in self.list()
