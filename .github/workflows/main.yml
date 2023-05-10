@@ -17,6 +17,7 @@ jobs:
         env:
           COVERAGE: true
           RAILS_ENV: test
-        run: docker-compose --file docker-compose.ci.yml run --rm api pytest
+        run: docker-compose --file docker-compose.ci.yml run --rm api make test
+      
       - name: Coveralls
-      uses: coverallsapp/github-action@v2
+        uses: coverallsapp/github-action@v2

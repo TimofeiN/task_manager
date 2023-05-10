@@ -1,6 +1,5 @@
 .PHONY: all test clean
 
 test:
-	coverage run --relative_files -m pytest 
+	coverage run -m pytest 
 	coverage report
-	coveralls
