@@ -8,6 +8,9 @@ on:
     branches:
       - 'develop'
 
+env:
+  COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,6 +25,16 @@ jobs:
         run: docker-compose --file docker-compose.ci.yml run --rm api make test
         
       - name: Coveralls
-        uses: AndreMiras/coveralls-python-action@develop
-        with:
-          INPUT_COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+      uses: AndreMiras/coveralls-python-action@develop
+      with:
+        parallel: true
+        flag-name: Unit Test
+
+  coveralls_finish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: AndreMiras/coveralls-python-action@develop
+      with:
+        parallel-finished: true
