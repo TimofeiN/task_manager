@@ -22,4 +22,4 @@ jobs:
         env:
           COVERAGE: true
           RAILS_ENV: test
-        run: docker-compose --file docker-compose.ci.yml run --rm api coverage run -m pytest coveralls
+        run: docker-compose --file docker-compose.ci.yml run --rm api coverage run -m pytest & coveralls --service=github
