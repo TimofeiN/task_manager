@@ -8,6 +8,8 @@ on:
     branches:
       - 'develop'
 
+env: COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,8 +22,3 @@ jobs:
           COVERAGE: true
           RAILS_ENV: test
         run: docker-compose --file docker-compose.ci.yml run --rm api make test
-      
-      - name: Coveralls
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: coveralls --service=github
