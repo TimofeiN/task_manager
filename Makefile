@@ -2,4 +2,4 @@
 
 test:
 	coverage run -m pytest
-	coveralls
+	coverage report
