@@ -18,5 +18,5 @@ jobs:
           COVERAGE: true
           RAILS_ENV: test
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          repo_token: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: docker-compose --file docker-compose.ci.yml run --rm api make test
