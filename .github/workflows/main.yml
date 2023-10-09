@@ -23,10 +23,9 @@ jobs:
         env:
           COVERAGE: true
           RAILS_ENV: test
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: docker-compose --file docker-compose.ci.yml run --rm api make test
 
       - name: Coveralls
         run: docker-compose --file docker-compose.ci.yml run --rm api coveralls
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          repo_token: ${{ secrets.COVERALLS_REPO_TOKEN }}
