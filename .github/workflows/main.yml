@@ -19,6 +19,7 @@ jobs:
         env:
           COVERAGE: true
           RAILS_ENV: test
+          PATH: .
         run: docker-compose --file docker-compose.ci.yml run --rm api make test
 
       - name: Coveralls
@@ -26,7 +27,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel: true
-          base-path: /app
           flag-name: Run Test
 
   coveralls_finish:
@@ -38,4 +38,3 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         parallel-finished: true
-        base-path: /app
