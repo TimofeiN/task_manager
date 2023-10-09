@@ -21,4 +21,4 @@ jobs:
         run: docker-compose --file docker-compose.ci.yml run --rm api make test
 
       - name: Coveralls
-        uses: docker-compose --file docker-compose.ci.yml run --rm api coveralls
+        run: docker-compose --file docker-compose.ci.yml run --rm api coveralls
