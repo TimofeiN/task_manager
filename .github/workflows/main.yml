@@ -19,5 +19,5 @@ jobs:
           RAILS_ENV: test
         run: docker-compose --file docker-compose.ci.yml run --rm api make test
 
-      - name: Report Coveralls
-        run: docker-compose --file docker-compose.ci.yml run --rm api coveralls
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2
