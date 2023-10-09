@@ -24,8 +24,7 @@ jobs:
       - name: Coveralls
         uses: AndreMiras/coveralls-python-action@develop
         with:
-          github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
-          service-name: github-actions
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel: true
           flag-name: Run Test
 
@@ -36,6 +35,5 @@ jobs:
     - name: Coveralls Finished
       uses: AndreMiras/coveralls-python-action@develop
       with:
-        github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        service-name: github-actions
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         parallel-finished: true
