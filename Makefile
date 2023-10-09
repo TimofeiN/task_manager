@@ -2,4 +2,4 @@
 
 test:
 	coverage run -m pytest
-	coverage lcov
+	coverage report
