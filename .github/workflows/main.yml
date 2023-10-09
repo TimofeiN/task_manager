@@ -23,4 +23,4 @@ jobs:
         run: docker-compose --file docker-compose.ci.yml run --rm api make test
 
       - name: Report Coveralls
-        run: docker-compose --file docker-compose.ci.yml run --rm api coveralls
+        run: docker-compose --file docker-compose.ci.yml run --rm api COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls
