@@ -20,7 +20,7 @@ jobs:
         env:
           COVERAGE: true
           RAILS_ENV: test
-        run: docker-compose --file docker-compose.ci.yml run --rm api make test coveralls
+        run: docker-compose --file docker-compose.ci.yml run --rm api make test
 
       - name: Coveralls
         run: docker-compose --file docker-compose.ci.yml run --rm api coveralls
