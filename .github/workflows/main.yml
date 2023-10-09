@@ -26,6 +26,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel: true
+          base-path: /app
           flag-name: Run Test
 
   coveralls_finish:
@@ -37,3 +38,4 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         parallel-finished: true
+        base-path: /app
