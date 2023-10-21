@@ -1,22 +1,16 @@
-name: Main
-
-on:
-  pull_request:
-    branches:
-      - 'develop'
-  push:
-    branches:
-      - 'develop'
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - name: Run tests
-        env:
-          COVERAGE: true
-          RAILS_ENV: test
-        run: docker-compose --file docker-compose.ci.yml run --rm api pytest
+        run: |
+          mkdir reports
+          docker-compose --file docker-compose.ci.yml run -v $(pwd)/reports:/app/reports --rm api make test
+          cd reports
+
       - name: Coveralls
-      uses: coverallsapp/github-action@v2
+        uses: coverallsapp/github-action@v2
