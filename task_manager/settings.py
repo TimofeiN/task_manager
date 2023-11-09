@@ -55,6 +55,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "rollbar.contrib.django.middleware.RollbarNotifierMiddleware",
 ]
 
 ROOT_URLCONF = "task_manager.urls"
@@ -148,3 +149,10 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "main.User"
+
+ROLLBAR = {
+    'access_token': os.environ["POST_SERVER_ITEM_ACCESS_TOKEN"],
+    'environment': 'development' if DEBUG else 'production',
+    'code_version': '1.0',
+    'root': BASE_DIR,
+}
