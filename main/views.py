@@ -71,7 +71,6 @@ class TaskViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, AdminOrReadonly)
 
 
-def generate_error(request: HttpRequest) -> HttpResponse:
+def generate_error(request: HttpRequest) -> None:
     a = None
     a.hello()
-    return HttpResponse("Hello, world. You're at the pollapp index.")
