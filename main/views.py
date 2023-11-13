@@ -1,7 +1,8 @@
 import django_filters
+
+from django.http import HttpRequest, HttpResponse
 from rest_framework import viewsets
 from rest_framework.permissions import BasePermission, SAFE_METHODS, IsAuthenticated
-from django.http import HttpRequest
 
 from .models import User, Task, Tag
 from .serializers import UserSerializer, TaskSerializer, TagSerializer
@@ -68,3 +69,8 @@ class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     filterset_class = TaskFilter
     permission_classes = (IsAuthenticated, AdminOrReadonly)
+
+
+def generate_error(request: HttpRequest) -> None:
+    a = None
+    a.hello()

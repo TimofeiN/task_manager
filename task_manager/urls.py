@@ -5,7 +5,7 @@ from drf_yasg import openapi
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from main.admin import task_manager_admin_site
-from main.views import UserViewSet, TagViewSet, TaskViewSet
+from main.views import UserViewSet, TagViewSet, TaskViewSet, generate_error
 
 router = routers.SimpleRouter()
 router.register(r"users", UserViewSet, basename="users")
@@ -46,4 +46,5 @@ urlpatterns = [
     ),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("rollbar-error", generate_error, name="rollbar_error"),
 ]
