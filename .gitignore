@@ -4,5 +4,4 @@ __pycache__/
 *$py.class
 .coverage
 .idea
-newrelic.ini
 .env
