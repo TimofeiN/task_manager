@@ -4,4 +4,4 @@ __pycache__/
 *$py.class
 .coverage
 .idea
-
+.env
