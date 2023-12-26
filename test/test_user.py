@@ -1,30 +1,26 @@
-from rest_framework.utils.serializer_helpers import ReturnDict
+from typing import Any
 
 from base import TestViewSetBase
 
 
 class TestUserViewSet(TestViewSetBase):
     basename = "users"
-    user_attributes = {
-        "username": "johnsmith",
-        "first_name": "John",
-        "last_name": "Smith",
-        "email": "john@test.com",
-        "is_staff": True,
-    }
 
-    test_user_attributes = {
-        "username": "johnsmith_2",
-        "first_name": "John",
-        "last_name": "Smith",
-        "email": "john@test.com",
-    }
+    @classmethod
+    def setUpTestData(cls) -> None:
+        super().setUpTestData()
+        cls.test_user_attributes = {
+            "username": "johnsmith_2",
+            "first_name": "John",
+            "last_name": "Smith",
+            "email": "john@test.com",
+        }
 
     @staticmethod
     def expected_details(entity: dict, attributes: dict):
         return {**attributes, "id": entity["id"], "role": entity["role"]}
 
-    def test_create(self) -> ReturnDict:
+    def test_create(self) -> dict[str, Any]:
         user = self.create(self.test_user_attributes)
         expected_response = self.expected_details(user, self.test_user_attributes)
         assert user == expected_response
