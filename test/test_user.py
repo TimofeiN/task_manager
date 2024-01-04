@@ -18,7 +18,12 @@ class TestUserViewSet(TestViewSetBase):
 
     @staticmethod
     def expected_details(entity: dict, attributes: dict):
-        return {**attributes, "id": entity["id"], "role": entity["role"], "avatar_picture": entity["avatar_picture"]}
+        return {
+            **attributes,
+            "id": entity["id"],
+            "role": entity["role"],
+            "avatar_picture": entity["avatar_picture"],
+        }
 
     def test_create(self) -> dict[str, Any]:
         user = self.create(self.test_user_attributes)

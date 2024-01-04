@@ -162,10 +162,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "main.User"
 
 ROLLBAR = {
-    'access_token': os.environ["POST_SERVER_ITEM_ACCESS_TOKEN"],
-    'environment': 'development' if DEBUG else 'production',
-    'code_version': '1.0',
-    'root': BASE_DIR,
+    "access_token": os.environ["POST_SERVER_ITEM_ACCESS_TOKEN"],
+    "environment": "development" if DEBUG else "production",
+    "code_version": "1.0",
+    "root": BASE_DIR,
 }
 
 DJANGO_ENV = os.environ.get("DJANGO_ENV", "dev")

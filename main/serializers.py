@@ -22,12 +22,20 @@ class UserSerializer(serializers.ModelSerializer):
         validators=[
             FileMaxSizeValidator(settings.UPLOAD_MAX_SIZES["avatar_picture"]),
             FileExtensionValidator(["jpeg", "jpg", "png"]),
-        ]
+        ],
     )
 
     class Meta:
         model = User
-        fields = ("id", "username", "first_name", "last_name", "email", "role", "avatar_picture")
+        fields = (
+            "id",
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "role",
+            "avatar_picture",
+        )
 
 
 class TagSerializer(serializers.ModelSerializer):
