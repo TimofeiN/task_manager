@@ -3,6 +3,7 @@ from http import HTTPStatus
 
 from django.http import HttpResponse
 from django.urls import reverse
+from rest_framework.response import Response
 from rest_framework.test import APIClient, APITestCase
 
 from main.models import User
@@ -60,3 +61,9 @@ class TestViewSetBase(APITestCase):
         response = self.api_client.put(self.detail_url(args), data=data)
         assert response.status_code == HTTPStatus.OK
         return response.data
+
+    def request_create(
+        self, data: dict, args: List[Union[str, int]] = None, format: str = None
+    ) -> Response:
+        response = self.api_client.post(self.list_url(args), data=data, format=format)
+        return response
