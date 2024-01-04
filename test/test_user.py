@@ -18,7 +18,7 @@ class TestUserViewSet(TestViewSetBase):
 
     @staticmethod
     def expected_details(entity: dict, attributes: dict):
-        return {**attributes, "id": entity["id"], "role": entity["role"]}
+        return {**attributes, "id": entity["id"], "role": entity["role"], "avatar_picture": entity["avatar_picture"]}
 
     def test_create(self) -> dict[str, Any]:
         user = self.create(self.test_user_attributes)
@@ -30,6 +30,7 @@ class TestUserViewSet(TestViewSetBase):
         user = self.test_create()
         new_user_id = user["id"]
         response = self.retrieve(new_user_id)
+        assert response["avatar_picture"] is None
         assert response == user
 
     def test_list(self) -> None:
