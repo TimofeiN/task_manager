@@ -37,7 +37,6 @@ class TestViewSetBase(APITestCase):
     def create(
         self, data: dict, args: List[Union[str, int]] = None, format: str = None
     ) -> dict:
-        print(self.api_client, self.user)
         response = self.api_client.post(self.list_url(args), data=data, format=format)
         assert response.status_code == HTTPStatus.CREATED
         return response.data
