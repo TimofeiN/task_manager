@@ -8,7 +8,7 @@ def send_assign_notification(task_id: int) -> None:
     task = Task.objects.get(pk=task_id)
     executor = task.executor
     send_html_email(
-        subject="You've been appointed as the executor of the task.",
+        subject="You've assigned a task.",
         template="assignee_notification.html",
         context={"task": task.title},
         recipients=[executor.email],

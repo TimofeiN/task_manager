@@ -1,25 +1,30 @@
 from typing import Union, List
 from http import HTTPStatus
+
+from django.http import HttpResponse
 from django.urls import reverse
 from rest_framework.test import APIClient, APITestCase
 
 from main.models import User
+from test.utils.action_client import ActionClient
 
 
 class TestViewSetBase(APITestCase):
     user: User = None
-    client: APIClient = None
+    api_client: APIClient = None
+    action_client: ActionClient
     basename: str
 
     @classmethod
     def setUpTestData(cls) -> None:
         super().setUpTestData()
-        cls.user = cls.create_api_user(cls)
-        cls.client = APIClient()
+        cls.api_client = APIClient()
+        cls.action_client = ActionClient(cls.api_client)
+        cls.action_client.init_user()
+        cls.user = cls.action_client.user
 
-    @staticmethod
-    def create_api_user(cls):
-        return User.objects.create(**cls.user_attributes)
+    def setUp(self) -> None:
+        self.api_client.force_authenticate(self.user)
 
     @classmethod
     def detail_url(cls, key: Union[int, str]) -> str:
@@ -32,31 +37,26 @@ class TestViewSetBase(APITestCase):
     def create(
         self, data: dict, args: List[Union[str, int]] = None, format: str = None
     ) -> dict:
-        self.client.force_authenticate(self.user)
-        response = self.client.post(self.list_url(args), data=data, format=format)
+        response = self.api_client.post(self.list_url(args), data=data, format=format)
         assert response.status_code == HTTPStatus.CREATED
         return response.data
 
-    def retrieve(self, args: List[Union[str, int]] = None) -> dict:
-        self.client.force_authenticate(self.user)
-        response = self.client.get(self.detail_url(args))
+    def retrieve(self, args: Union[str, int] = None) -> dict:
+        response = self.api_client.get(self.detail_url(args))
         assert response.status_code == HTTPStatus.OK
         return response.data
 
-    def delete(self, args: List[Union[str, int]] = None) -> dict:
-        self.client.force_authenticate(self.user)
-        response = self.client.delete(self.detail_url(args))
+    def delete(self, args: Union[str, int] = None) -> HttpResponse:
+        response = self.api_client.delete(self.detail_url(args))
         assert response.status_code == HTTPStatus.NO_CONTENT
         return response
 
     def list(self, args: List[Union[str, int]] = None) -> dict:
-        self.client.force_authenticate(self.user)
-        response = self.client.get(self.list_url(args))
+        response = self.api_client.get(self.list_url(args))
         assert response.status_code == HTTPStatus.OK
         return response.data
 
-    def update(self, data: dict, args: List[Union[str, int]] = None) -> dict:
-        self.client.force_authenticate(self.user)
-        response = self.client.put(self.detail_url(args), data=data)
+    def update(self, data: dict, args: Union[str, int] = None) -> dict:
+        response = self.api_client.put(self.detail_url(args), data=data)
         assert response.status_code == HTTPStatus.OK
         return response.data
