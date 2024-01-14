@@ -4,7 +4,7 @@ from typing import Optional, Any
 from rest_framework.test import APIClient
 
 from main.models import User
-from test.utils.model_resource import UserResource, TaskResource
+from test.utils.model_resource import UserResource, TaskResource, TagResource
 
 
 class ActionClient:
@@ -13,6 +13,7 @@ class ActionClient:
         self.user: Optional[User] = None
         self.users = UserResource()
         self.tasks = TaskResource()
+        self.tags = TagResource()
 
     def init_user(self) -> None:
         self.user = self.users.create(is_staff=True)

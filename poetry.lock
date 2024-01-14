@@ -443,6 +443,20 @@ files = [
 ]
 
 [[package]]
+name = "drf-extensions"
+version = "0.7.1"
+description = "Extensions for Django REST Framework"
+optional = false
+python-versions = "*"
+files = [
+    {file = "drf-extensions-0.7.1.tar.gz", hash = "sha256:90abfc11a2221e8daf4cd54457e41ed38cd71134678de9622e806193db027db1"},
+    {file = "drf_extensions-0.7.1-py2.py3-none-any.whl", hash = "sha256:007910437e64aa1d5ad6fc47266a4ac4280e31761e6458eb30fcac7494ac7d4e"},
+]
+
+[package.dependencies]
+djangorestframework = ">=3.9.3"
+
+[[package]]
 name = "drf-yasg"
 version = "1.21.5"
 description = "Automated generation of real Swagger/OpenAPI 2.0 schemas from Django Rest Framework code."
@@ -1239,4 +1253,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "914b04474b5468eebaab207689bdf6f26ad42461bb0b7d23d1ad4857206e442b"
+content-hash = "3f919497c44c95e1c1c7eeb47772c2474dca4348a2b816d9d98fe324d329f6db"

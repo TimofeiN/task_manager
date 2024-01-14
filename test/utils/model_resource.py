@@ -1,7 +1,19 @@
 from typing import Any
 
-from main.models import User, Task
-from test.fixtures.factories import UserFactory, TaskFactory
+from django.db.models import Model
+from factory import Factory
+
+from main.models import User, Task, Tag
+from test.fixtures.factories import UserFactory, TaskFactory, TagFactory
+
+
+class ModelResourceBase:
+    factory: Factory
+    model: Model
+
+    def create(self, **kwargs: Any) -> Model:
+        attributes = self.factory.build(**kwargs)
+        return self.model.objects.create(**attributes)
 
 
 class UserResource:
@@ -12,9 +24,11 @@ class UserResource:
         return User.objects.create_user(**attributes)
 
 
-class TaskResource:
+class TaskResource(ModelResourceBase):
     factory = TaskFactory
+    model = Task
 
-    def create(self, **kwargs: Any) -> Task:
-        attributes = self.factory.build(**kwargs)
-        return Task.objects.create(**attributes)
+
+class TagResource(ModelResourceBase):
+    factory = TagFactory
+    model = Tag

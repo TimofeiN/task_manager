@@ -1,17 +1,12 @@
-from typing import Any
-
-from factory import Factory, Faker
+from factory import Faker
 
 from main.models import User
-from .base import ImageFileProvider
+from .base import ImageFileProvider, FactoryBase
 
 Faker.add_provider(ImageFileProvider)
 
 
-class UserFactory(Factory):
-    class Meta:
-        model = dict
-
+class UserFactory(FactoryBase):
     username = Faker("user_name")
     role = Faker("random_element", elements=User.Roles.values)
     email = Faker("email")
