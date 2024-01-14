@@ -1,7 +1,6 @@
 from typing import Union, List
 from http import HTTPStatus
 
-# from django.http import HttpResponse
 from django.urls import reverse
 from rest_framework.response import Response
 from rest_framework.test import APIClient, APITestCase
