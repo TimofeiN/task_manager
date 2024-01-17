@@ -5,12 +5,35 @@ from drf_yasg import openapi
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from main.admin import task_manager_admin_site
-from main.views import UserViewSet, TagViewSet, TaskViewSet, generate_error
+from main.services.single_resource import BulkRouter
+from main.views import (
+    CurrentUserViewSet,
+    UserViewSet,
+    TagViewSet,
+    TaskViewSet,
+    generate_error,
+    UserTasksViewSet,
+    TaskTagsViewSet,
+)
 
-router = routers.SimpleRouter()
-router.register(r"users", UserViewSet, basename="users")
-router.register(r"tasks", TaskViewSet, basename="tasks")
+router = BulkRouter()
+users = router.register(r"users", UserViewSet, basename="users")
+tasks = router.register(r"tasks", TaskViewSet, basename="tasks")
 router.register(r"tags", TagViewSet, basename="tags")
+router.register(r"current-user", CurrentUserViewSet, basename="current_user")
+
+users.register(
+    r"tasks",
+    UserTasksViewSet,
+    basename="user_tasks",
+    parents_query_lookups=["executor_id"],
+)
+tasks.register(
+    r"tags",
+    TaskTagsViewSet,
+    basename="task_tags",
+    parents_query_lookups=["task_id"],
+)
 
 schema_view = get_schema_view(
     openapi.Info(
