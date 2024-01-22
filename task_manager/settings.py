@@ -189,3 +189,7 @@ else:
 UPLOAD_MAX_SIZES: dict[str, int] = {
     "avatar_picture": 1 * 1024 * 1024,
 }
+
+REDIS_HOST = os.environ.get("REDIS_HOST")
+REDIS_PORT = os.environ.get("REDIS_PORT")
+CELERY_BROKER_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/0"
