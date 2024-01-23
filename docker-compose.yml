@@ -11,6 +11,8 @@ services:
       - 8000:8000
     depends_on:
       - db
+      - celery
+      - redis
     environment: &api-environment
       DJANGO_ENV: dev
       DJANGO_SECRET_KEY: secret_key
@@ -30,3 +32,34 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+
+  redis:
+    image: redis:6-alpine
+    ports:
+      - "6379:6379"
+
+  celery:
+    build: .
+    command: celery --app=task_manager worker --loglevel=INFO
+    environment:
+      <<: *api-environment
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+
+  flower:
+    build: .
+    command: celery --app=task_manager --broker=redis://redis:6379/0 flower --port=5555
+    environment:
+      <<: *api-environment
+    volumes:
+      - .:/app
+    ports:
+      - "5555:5555"
+    env_file:
+      - .env
+    depends_on:
+      - redis
