@@ -14,6 +14,8 @@ from main.views import (
     generate_error,
     UserTasksViewSet,
     TaskTagsViewSet,
+    CountdownJobViewSet,
+    AsyncJobViewSet,
 )
 
 router = BulkRouter()
@@ -21,6 +23,8 @@ users = router.register(r"users", UserViewSet, basename="users")
 tasks = router.register(r"tasks", TaskViewSet, basename="tasks")
 router.register(r"tags", TagViewSet, basename="tags")
 router.register(r"current-user", CurrentUserViewSet, basename="current_user")
+router.register(r"countdown", CountdownJobViewSet, basename="countdown")
+router.register(r"jobs", AsyncJobViewSet, basename="jobs")
 
 users.register(
     r"tasks",
